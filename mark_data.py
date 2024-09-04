@@ -88,13 +88,13 @@ for img_path, img_name, img_id in img_files:
 
         if img_path in data_mark:
             id, _, _, _, _ = data_mark[img_path]
-            if id == 1:
+            if id == 0:
                 class_name = "not fishing"
                 has_id = True
-            elif id == 2:
+            elif id == 1:
                 class_name = "fishing"
                 has_id = True
-            elif id == 3:
+            elif id == 2:
                 class_name = "fish"
                 has_id = True
             else:
@@ -109,11 +109,11 @@ for img_path, img_name, img_id in img_files:
         elif op == ord("1") or op == ord("2") or op == ord("3"):
             id = 0
             if op == ord("1"):
-                id = 1
+                id = 0
             elif op == ord("2"):
-                id = 2
+                id = 1
             elif op == ord("3"):
-                id = 3
+                id = 2
             if id != 0:
                 data_mark[img_path] = (id, x, y, w, h)
                 has_id = True

@@ -16,7 +16,7 @@ def show_text(img, text, pos):
 
 
 image_folder = sys.argv[1]
-model = YOLO("./runs/detect/train15/weights/best.pt")
+model = YOLO("./runs/detect/train12/weights/best.pt")
 image_files = [
     (os.path.join(image_folder, file), file, int(file[:-4]))
     for file in os.listdir(image_folder)
@@ -36,10 +36,17 @@ for image_path, image_name, _ in image_files:
         boxes = results[0].boxes.cpu().numpy()
         best = np.argmax(boxes.conf)
         conf = boxes.conf[best]
+        cls = int(boxes.cls[best])
         x, y, w, h = boxes.xywh[best]
         x, y, w, h = int(x), int(y), int(w), int(h)
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        show_text(img, f"{conf:.3f}", (x, y - 10))
+        if cls == 0:
+            class_name = "fishing"
+        elif cls == 1:
+            class_name = "fish_bites"
+        else:
+            class_name = str(cls)
+        show_text(img, f"{class_name}:{conf:.3f}", (x, y - 10))
     cv2.imshow("img", img)
     op = cv2.waitKey(1)
     if op == ord("q"):

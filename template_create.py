@@ -13,4 +13,4 @@ template = img[y : y + h, x : x + w]
 cv2.imshow("img", template)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-cv2.imwrite("./data/template.bmp", template)
+cv2.imwrite("./template.bmp", template)

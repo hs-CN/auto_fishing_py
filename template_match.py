@@ -3,11 +3,11 @@ import os
 import win32gui
 from window_capture import WindowCapture
 
-if not os.path.exists("./data/template.bmp"):
+if not os.path.exists("./template.bmp"):
     print("模版文件'template.bmp'不存在")
     exit(0)
 
-template = cv2.imread("./data/template.bmp", cv2.IMREAD_GRAYSCALE)
+template = cv2.imread("./template.bmp", cv2.IMREAD_GRAYSCALE)
 hwnd = win32gui.FindWindow(None, "魔兽世界")
 if hwnd == 0:
     print("窗口未找到")

@@ -4,7 +4,7 @@ import win32gui
 import threading
 import os
 
-data_root = "./data/origin_data"
+data_root = "./origin_data"
 
 
 def capture_thread():

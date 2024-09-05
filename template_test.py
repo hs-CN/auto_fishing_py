@@ -2,11 +2,11 @@ import sys
 import cv2
 import os
 
-if not os.path.exists("./data/template.bmp"):
+if not os.path.exists("./template.bmp"):
     print("模版文件'template.bmp'不存在")
     exit(0)
 
-template = cv2.imread("./data/template.bmp", cv2.IMREAD_GRAYSCALE)
+template = cv2.imread("./template.bmp", cv2.IMREAD_GRAYSCALE)
 
 if len(sys.argv) != 2:
     print("参数错误")

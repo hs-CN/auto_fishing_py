@@ -14,6 +14,8 @@ class WindowCapture:
         ctypes.windll.user32.SetProcessDPIAware()
         left, top, right, bottom = win32gui.GetWindowRect(self.hwnd)
         print(f"窗口矩形:left:{left} top:{top} right:{right} bottom:{bottom}")
+        self.left = left
+        self.top = top
         self.width = right - left
         self.height = bottom - top
 

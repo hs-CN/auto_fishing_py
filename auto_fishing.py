@@ -88,11 +88,17 @@ else:
         window_capture = WindowCapture(hwnd)
         window_left = window_capture.left
         window_top = window_capture.top
+        window_c_x = int(window_left + window_capture.width * 0.5)
+        window_c_y = int(window_top + window_capture.height * 0.5)
         not_fishing_count = 0
         fish_bites_count = 0
         start_time = 0
         while True:
             if time.time() - start_time > 30 * 60:
+                mouse_move(window_c_x, window_c_y, 50)
+                time.sleep(0.2 + random.random() * 0.2)
+                mouse_right_click()
+                time.sleep(0.2 + random.random() * 0.2)
                 use_big_fishing_float()
                 start_time = time.time()
             img = window_capture.capture()
@@ -103,9 +109,7 @@ else:
                 if not_fishing_count < 10:
                     continue
                 not_fishing_count = 0
-                x = int(window_left + window_capture.width * 0.5)
-                y = int(window_top + window_capture.height * 0.5)
-                mouse_move(x, y, 50)
+                mouse_move(window_c_x, window_c_y, 50)
                 time.sleep(0.2 + random.random() * 0.2)
                 mouse_right_click()
                 time.sleep(0.2 + random.random() * 0.2)

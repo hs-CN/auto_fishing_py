@@ -6,6 +6,7 @@ import time
 import math
 
 
+# Press '4' which is my big fishing float hotkey
 def use_big_fishing_float():
     win32api.keybd_event(0x34, 0, 0, 0)
     time.sleep(0.1 + 0.1 * random.random())
@@ -19,6 +20,7 @@ def mouse_right_click():
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
 
 
+# Press Alt + ` which is my fish hotkey
 def retry_keybd():
     win32api.keybd_event(win32con.VK_MENU, 0, 0, 0)
     time.sleep(0.1 + 0.1 * random.random())
@@ -27,6 +29,17 @@ def retry_keybd():
     win32api.keybd_event(win32con.VK_MENU, 0, win32con.KEYEVENTF_KEYUP, 0)
     time.sleep(0.1 + 0.1 * random.random())
     win32api.keybd_event(0xC0, 0, win32con.KEYEVENTF_KEYUP, 0)
+
+
+# Press Alt + Tab to switch back
+def switch_back():
+    win32api.keybd_event(win32con.VK_MENU, 0, 0, 0)
+    time.sleep(0.02 + 0.02 * random.random())
+    win32api.keybd_event(win32con.VK_TAB, 0, 0, 0)
+    time.sleep(0.02 + 0.02 * random.random())
+    win32api.keybd_event(win32con.VK_TAB, 0, win32con.KEYEVENTF_KEYUP, 0)
+    time.sleep(0.02 + 0.02 * random.random())
+    win32api.keybd_event(win32con.VK_MENU, 0, win32con.KEYEVENTF_KEYUP, 0)
 
 
 def mouse_move(x, y, r=20):
@@ -90,7 +103,15 @@ else:
                 if not_fishing_count < 10:
                     continue
                 not_fishing_count = 0
+                x = int(window_left + window_capture.width * 0.5)
+                y = int(window_top + window_capture.height * 0.5)
+                mouse_move(x, y, 50)
+                time.sleep(0.2 + random.random() * 0.2)
+                mouse_right_click()
+                time.sleep(0.2 + random.random() * 0.2)
                 retry_keybd()
+                time.sleep(0.1 + random.random() * 0.1)
+                switch_back()
                 time.sleep(2 + random.random() * 0.5)
             else:
                 boxes = results[0].boxes.cpu().numpy()
@@ -115,6 +136,8 @@ else:
                     mouse_right_click()
                     time.sleep(0.5 + random.random() * 0.5)
                     retry_keybd()
+                    time.sleep(0.1 + random.random() * 0.1)
+                    switch_back()
                     time.sleep(2 + random.random() * 0.5)
                 else:
                     print(f"unknown cls:{cls} [{conf:0.3f}]")

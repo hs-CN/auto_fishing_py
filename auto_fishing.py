@@ -6,6 +6,13 @@ import time
 import math
 
 
+def use_big_fishing_float():
+    win32api.keybd_event(0x34, 0, 0, 0)
+    time.sleep(0.1 + 0.1 * random.random())
+    win32api.keybd_event(0x34, 0, win32con.KEYEVENTF_KEYUP, 0)
+    time.sleep(5)
+
+
 def mouse_right_click():
     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
     time.sleep(0.1 + 0.1 * random.random())
@@ -51,7 +58,7 @@ def mouse_move(x, y, r=20):
         win32api.mouse_event(
             win32con.MOUSEEVENTF_MOVE, int(dir_x * delta), int(dir_y * delta), 0, 0
         )
-        time.sleep(0.03 + 0.01 * random.random())
+        time.sleep(0.02 + 0.01 * random.random())
 
 
 hwnd = win32gui.FindWindow(None, "魔兽世界")
@@ -69,9 +76,12 @@ else:
         window_left = window_capture.left
         window_top = window_capture.top
         not_fishing_count = 0
-        fishing_count = 0
         fish_bites_count = 0
+        start_time = 0
         while True:
+            if time.time() - start_time > 30 * 60:
+                use_big_fishing_float()
+                start_time = time.time()
             img = window_capture.capture()
             results = model.predict(img, conf=0.5, imgsz=640, verbose=False)
             if len(results[0].boxes) == 0:
@@ -91,22 +101,21 @@ else:
                 x, y, w, h = int(x), int(y), int(w), int(h)
                 if cls == 0:
                     print(f"Fishing [{conf:0.3f}]")
-                    fishing_count += 1
-                    if fishing_count < 30:
-                        continue
-                    fishing_count = 0
-                    mouse_x = int(window_left + x + w * 0.5)
-                    mouse_y = int(window_top + y + h * 0.5)
-                    mouse_move(mouse_x, mouse_y)
                 elif cls == 1:
                     print(f"Fish bites [{conf:0.3f}]")
                     if conf > 0.8:
                         fish_bites_count += 1
                     if fish_bites_count < 3:
                         continue
-                    mouse_right_click()
                     fish_bites_count = 0
+                    mouse_x = int(window_left + x + w * 0.5)
+                    mouse_y = int(window_top + y + h * 0.5)
+                    mouse_move(mouse_x, mouse_y)
+                    time.sleep(0.03 + random.random() * 0.01)
+                    mouse_right_click()
                     time.sleep(0.5 + random.random() * 0.5)
+                    retry_keybd()
+                    time.sleep(2 + random.random() * 0.5)
                 else:
                     print(f"unknown cls:{cls} [{conf:0.3f}]")
     except KeyboardInterrupt as e:

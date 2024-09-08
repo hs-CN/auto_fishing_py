@@ -14,10 +14,10 @@ def use_big_fishing_float():
     time.sleep(5)
 
 
-def mouse_right_click():
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
+def mouse_left_click():
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
     time.sleep(0.1 + 0.1 * random.random())
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
 
 
 # Press Alt + ` which is my fish hotkey
@@ -97,7 +97,7 @@ else:
             if time.time() - start_time > 30 * 60:
                 mouse_move(window_c_x, window_c_y, 50)
                 time.sleep(0.2 + random.random() * 0.2)
-                mouse_right_click()
+                mouse_left_click()
                 time.sleep(0.2 + random.random() * 0.2)
                 use_big_fishing_float()
                 start_time = time.time()
@@ -111,7 +111,7 @@ else:
                 not_fishing_count = 0
                 mouse_move(window_c_x, window_c_y, 50)
                 time.sleep(0.2 + random.random() * 0.2)
-                mouse_right_click()
+                mouse_left_click()
                 time.sleep(0.2 + random.random() * 0.2)
                 retry_keybd()
                 time.sleep(0.1 + random.random() * 0.1)
@@ -137,7 +137,7 @@ else:
                     mouse_y = int(window_top + y + h * 0.5)
                     mouse_move(mouse_x, mouse_y)
                     time.sleep(0.03 + random.random() * 0.01)
-                    mouse_right_click()
+                    mouse_left_click()
                     time.sleep(0.5 + random.random() * 0.5)
                     retry_keybd()
                     time.sleep(0.1 + random.random() * 0.1)
